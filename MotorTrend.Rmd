@@ -1,0 +1,62 @@
+---
+title: "MotorTrend"
+author: "Willianto"
+date: "14/06/2020"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setoptions, echo=FALSE}
+## Setting Global Option where echo = true so that someone will be able to read the code and results.
+knitr::opts_chunk$set(echo = TRUE, results = "hold", tidy = TRUE)
+```
+
+```{r LoadPackages, echo=FALSE}
+library(knitr) ##Load Knitr package
+library(ggplot2) ##Plotting and data
+library(pander) ##Load package for tidy T test result
+```
+
+## Motor Trend Data Analysis
+
+### 1. Executive Summary
+
+Motor Trend, a magazine about the automobile industry is looking at a data set of a collection of cars. The company is interested in exploring the relationship between a set of variables and miles per gallon (MPG) (outcome). They are particularly interested in the following two questions:
+
+“Is an automatic or manual transmission better for MPG”
+"Quantify the MPG difference between automatic and manual transmissions"
+
+The information about the Motor Trend dataset can be found at the following link: [mtcars info](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) <-click here
+
+<br />
+
+
+### 2. Load the mtcars data and perform some basic exploratory data analyses
+```{r mtcars}
+library(datasets)
+data(mtcars)
+mtcars$am <- factor(mtcars$am,labels=c('Automatic','Manual'))
+```
+<br />
+
+From the fig. 1 in the appendix we know that the mtcars dataset contains `r nrow(mtcars)` observations and `r length(mtcars)` variables: `r names(mtcars)`. The fig. 2 boxplot shows the relationship between MPG and AM, looking from the boxplot we can see that the manual tranmission yield a better MPG than automatic transmission.
+
+<br />
+
+
+### 5. Appendix
+
+***
+Figure 1:
+`r kable(summary(mtcars))`
+
+<br />
+
+Figure 2:
+```{r boxplot}
+boxplot(mpg~am, data = mtcars,
+        xlab = "Transmission",
+        ylab = "Miles per Gallon",
+        main = "MPG by Transmission Type")
+```
