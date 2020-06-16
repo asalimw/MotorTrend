@@ -36,11 +36,14 @@ The information about the Motor Trend dataset can be found at the following link
 ```{r mtcars}
 library(datasets)
 data(mtcars)
-mtcars$am <- factor(mtcars$am,labels=c('Automatic','Manual'))
+mtcars$am <- factor(mtcars$am,labels=c('Automatic','Manual')) ##assign automatic and manual transmission type to AM
 ```
 <br />
 
-From the fig. 1 in the appendix we know that the mtcars dataset contains `r nrow(mtcars)` observations and `r length(mtcars)` variables: `r names(mtcars)`. The fig. 2 boxplot shows the relationship between MPG and AM, looking from the boxplot we can see that the manual tranmission yield a better MPG than automatic transmission.
+From the fig. 1 in the appendix we know that the mtcars dataset contains `r nrow(mtcars)` observations and `r length(mtcars)` variables: `r names(mtcars)`. The fig. 2 boxplot shows the relationship between MPG and AM, from the boxplot we can see that the cars with manual transmission yield a better miles per gallon than the car with automatic transmission.
+
+However we need to test whether it is true that the cars with manual transmission yield better mpg than cars with automatic tranmission by performing a hyphothesis testing (T Test). The null hypothesis is the transmission does not impact the result of MPG and the alternative hyphothesis is tranmission will impact the result of MPG. To reject null hypothesis, a scientific standard of more than 95% confidence interval is used because anything less is no significance difference for scientific studies. Hence the P value (critical value) must be less than 5% ( .05) for a significance difference. If the P value is less than .05, it is likely that the transmission has impact on the MPG. If the P value is more than .05, it is unlikely that the transmission has impact on MPG. The P value results of the hypothesis T test conducted is in the appendix fig.3 shows the p value is 0.0002850207 which is less than .05. Therefore we reject the null hypothesis and we can conclude that tranmission type has impact on the MPG. The T Test result also shows that the mean for automatic is 17.15 MPG and the mean for manual is 24.39 MPG.
+
 
 <br />
 
@@ -59,4 +62,10 @@ boxplot(mpg~am, data = mtcars,
         xlab = "Transmission",
         ylab = "Miles per Gallon",
         main = "MPG by Transmission Type")
+```
+
+Figure 3: 
+```{r hypothesisTest}
+hTest <- t.test(mpg~am, data=mtcars, paired=F, var.equal=T, conf.level=0.95) 
+hTest
 ```
