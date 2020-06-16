@@ -34,8 +34,9 @@ The information about the Motor Trend dataset can be found at the following link
 <br />
 
 
-### 2. Load the mtcars data and perform some basic exploratory data analyses
+### 2. Exploratory Data Analysis
 ***
+Load the mtcars data and perform some basic exploratory data analyses
 ```{r mtcars}
 library(datasets)
 data(mtcars) ##Load mtcars dataset
@@ -47,7 +48,7 @@ From the fig. 1 in the appendix we know that the mtcars dataset contains `r nrow
 
 <br />
 
-### 3. Regression Models
+### 3. Regression Models Analysis
 ***
 
 However we need to test whether it is true that the cars with manual transmission yield better mpg than cars with automatic tranmission by performing a hyphothesis testing (T Test). The null hypothesis is the transmission does not impact the result of MPG and the alternative hyphothesis is the tranmission will impact the result of MPG. To reject null hypothesis, a scientific standard of more than 95% confidence interval is used because anything less is no significance difference for scientific studies. Hence the P value (critical value) must be less than 5% ( .05) for a significance difference. If the P value is less than .05, it is likely that the transmission has impact on the MPG. If the P value is more than .05, it is unlikely that the transmission has impact on MPG. 
@@ -61,6 +62,10 @@ The P value results of the hypothesis T test conducted shows the p value is `r h
 
 
 <br />
+
+### 4. Conclusion
+***
+
 
 ### 5. Appendix
 
@@ -83,3 +88,7 @@ boxplot(mpg~am, data = mtcars,
 ```
 
 Figure 3: 
+```{r variableRelationship}
+pairs(mpg ~ ., data = mtcars, main="Relationships between MPG and all the variables")
+```
+
