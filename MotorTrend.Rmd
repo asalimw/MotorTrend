@@ -8,11 +8,6 @@ output:
     df_print: paged
 ---
 
-```{r setoptions, echo=FALSE}
-## Setting Global Option where echo = true so that someone will be able to read the code and results.
-knitr::opts_chunk$set(echo = TRUE, results = "hold", tidy = TRUE)
-```
-
 ```{r LoadPackages, echo=FALSE}
 library(knitr) ##Load Knitr package
 library(ggplot2) ##Plotting and data
@@ -20,19 +15,24 @@ library(pander) ##Load package for tidy T test result
 library(car) ##Load package for VIF output
 ```
 
+```{r setoptions, echo=FALSE}
+## Setting Global Option where echo = true so that someone will be able to read the code and results.
+knitr::opts_chunk$set(echo = TRUE, results = "hold", tidy = TRUE)
+```
+
 ## Motor Trend Data Analysis
 
 ### 1. Executive Summary
 ***
 
-Motor Trend, a magazine about the automobile industry is looking at a data set of a collection of cars. The company is interested in exploring the relationship between a set of variables and miles per gallon (MPG) (outcome). They are particularly interested in the following two questions:
+Motor Trend, an automobile industry magazine is looking at a data set of a collection of cars. The company is interested in exploring the relationship between a set of variables and the outcome of miles per gallon (MPG). They are particularly interested in the following two questions:
 
 1. Is an automatic or manual transmission better for MPG?
 2. Quantify the MPG difference between automatic and manual transmissions
 
 Regression models and exploratory data analysis will be used to answer these two questions.
 
-Information about the Motor Trend dataset can be found at the following link: <span style="color:red">[mtcars info](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) </span> <-click here
+Information about the Motor Trend dataset can be found at the following link: [mtcars info](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) <-click here
 
 <br />
 
@@ -48,14 +48,15 @@ data(mtcars) ##Load mtcars dataset
 
 From the fig. 1 in the appendix we know that the mtcars dataset contains `r nrow(mtcars)` observations and `r length(mtcars)` variables: `r names(mtcars)`. The fig. 2 boxplot shows the relationship between MPG and AM, from the boxplot we can see that the cars with manual transmission yield a better miles per gallon than the car with automatic transmission.
 
-However we need to test whether it is true that the cars with manual transmission yield better mpg than cars with automatic tranmission by performing a hyphothesis testing (T Test). The null hypothesis is the transmission does not impact the outcome of MPG and the alternative hyphothesis is the tranmission will impact the outcome of MPG. To reject null hypothesis, a scientific standard of more than 95% confidence interval is used because anything less is no significance difference for scientific studies. Hence the P value (critical value) must be less than 5% ( .05) for a significance difference. If the P value is less than .05, it is likely that the transmission has impact on MPG. If the P value is more than .05, it is unlikely that the transmission has impact on MPG. 
+However we need to test whether it is true that the cars with different transmissions yield better MPG outcome by conducting a hyphothesis testing (T Test). The NULL HYPOTHESIS is the different transmissions does not impact the outcome of MPG and the ALTERNATIVE HYPOTHESIS is the different tranmissions will impact the outcome of MPG. To reject the null hypothesis, a scientific standard of more than 95% confidence interval is used because anything less is no significance difference for scientific studies. Hence the P value (critical value) must be less than 5% ( .05) for a significance difference. If the P value is less than .05, it is likely that the transmission has impact on MPG. If the P value is more than .05, it is unlikely that the transmission has impact on MPG. 
 
 ```{r hypothesisTest}
-##T test to show whether transmission has impact on MPG
+##T test to show whether transmission has impact on MPG - Appendix fig 2
 hTest <- t.test(mpg~am, data=mtcars, paired=F, var.equal=T, conf.level=0.95) 
 hTest$p.value ##Getting the p value of T test 
 ```
-The P value results of the hypothesis T test conducted shows the p value is `r hTest$p.value` which is less than .05. Therefore we reject the null hypothesis and we can conclude that tranmission type has an impact on the outcome of MPG. The T Test result of the mtcars dataset also shows that the mean for automatic is 17.15 MPG and the mean for manual is 24.39 MPG.
+
+The P value results of the hypothesis T test conducted shows the p value is `r hTest$p.value` which is less than .05. Therefore we reject the null hypothesis and we can conclude that tranmission type has an impact on the outcome of MPG. The T Test result in Fig. 2 appendix of the mtcars dataset also shows that the mean for automatic tranmission is 17.15 MPG and the mean for manual transmission is 24.39 MPG.
 
 <br />
 
@@ -66,7 +67,7 @@ We need to examine further whether the AM variable is the biggest factor in dete
 The first regression is the relationship between AM and MPG and in this instance we are using SIMPLE LINEAR REGRESSION (single variable).
 
 ```{r linearRegression}
-##Fit linear regression model
+##Fit simple linear regression model - Appendix fig 4
 linReg <- lm(mpg ~ am, data = mtcars)
 ```
 
@@ -75,7 +76,7 @@ Please refer to the fig. 4 in the appendix for the simple linear regression outp
 The second regression will be the MULTIVARIABLE REGRESSION where we will include all the 11 variables in the mtcars.
 
 ```{r multiRegression}
-##Fit multiple regression model
+##Fit multivariable regression model - Appendix fig 5
 mulReg <- lm(mpg~., data = mtcars)
 ```
 
@@ -84,7 +85,7 @@ Please refer to the fig. 5 in the appendix for the multiple regression output th
 The third regression will be the STEPWISE REGRESSION in which the choice of predictive variables is carried out by an automatic procedure. Please look at the appendix for the stepwise regression method explanation.
 
 ```{r stepwiseRegression, results='hide', error=FALSE, warning=FALSE, message=FALSE}
-##Fit Stepwise regression using bidirectional method
+##Fit Stepwise regression using bidirectional method - - Appendix fig 6
 stepReg <- step(lm(mpg~., data=mtcars), direction = "both")
 ```
 
@@ -112,7 +113,7 @@ names(mtcars) ##Names of the variables in mtcars dataset
 ```
 <br />
 
-Figure 2: Boxplot of MPG and AM relationship
+Figure 2: Boxplot of MPG and AM relationship + T Test
 ```{r boxplot}
 ##Exploratory Data Analysis by looking at the relationship of MPG and AM using boxplot
 boxplot(mpg~am, data = mtcars,
@@ -120,6 +121,7 @@ boxplot(mpg~am, data = mtcars,
         xlab = "Transmission",
         ylab = "Miles per Gallon",
         main = "MPG by Transmission Type")
+hTest
 ```
 <br />
 
@@ -156,12 +158,14 @@ vif(stepReg) ##Output of Variance Inflation Factor
 ```
 <br />
 
-Stepwise regression is a method of fitting regression models in which the choice of predictive variables is carried out by an automatic procedure.[1][2][3][4] In each step, a variable is considered for addition to or subtraction from the set of explanatory variables based on some prespecified criterion. Usually, this takes the form of a sequence of F-tests or t-tests, but other techniques are possible, such as adjusted R2, Akaike information criterion, Bayesian information criterion, Mallows's Cp, PRESS, or false discovery rate.
+Stepwise regression is a method of fitting regression models in which the choice of predictive variables is carried out by an automatic procedure. In each step, a variable is considered for addition to or subtraction from the set of explanatory variables based on some prespecified criterion. Usually, this takes the form of a sequence of F-tests or t-tests, but other techniques are possible, such as adjusted R2, Akaike information criterion, Bayesian information criterion, Mallows's Cp, PRESS, or false discovery rate.
 
 The main approaches are:
 
 Forward selection, which involves starting with no variables in the model, testing the addition of each variable using a chosen model fit criterion, adding the variable (if any) whose inclusion gives the most statistically significant improvement of the fit, and repeating this process until none improves the model to a statistically significant extent.
+
 Backward elimination, which involves starting with all candidate variables, testing the deletion of each variable using a chosen model fit criterion, deleting the variable (if any) whose loss gives the most statistically insignificant deterioration of the model fit, and repeating this process until no further variables can be deleted without a statistically insignificant loss of fit.
+
 Bidirectional elimination, a combination of the above, testing at each step for variables to be included or excluded.
 Source: wikipedia
 
