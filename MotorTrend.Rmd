@@ -17,21 +17,22 @@ knitr::opts_chunk$set(echo = TRUE, results = "hold", tidy = TRUE)
 library(knitr) ##Load Knitr package
 library(ggplot2) ##Plotting and data
 library(pander) ##Load package for tidy T test result
-library(car)
+library(car) ##Load package for VIF output
 ```
 
 ## Motor Trend Data Analysis
 
 ### 1. Executive Summary
+***
 
 Motor Trend, a magazine about the automobile industry is looking at a data set of a collection of cars. The company is interested in exploring the relationship between a set of variables and miles per gallon (MPG) (outcome). They are particularly interested in the following two questions:
 
-“Is an automatic or manual transmission better for MPG”
-"Quantify the MPG difference between automatic and manual transmissions"
+1. Is an automatic or manual transmission better for MPG?
+2. Quantify the MPG difference between automatic and manual transmissions
 
-Regression models and exploratory data analyses are used to answer the above questions.
+Regression models and exploratory data analysis will be used to answer these two questions.
 
-The information about the Motor Trend dataset can be found at the following link: [mtcars info](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) <-click here
+Information about the Motor Trend dataset can be found at the following link: <span style="color:red">[mtcars info](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) </span> <-click here
 
 <br />
 
@@ -47,57 +48,61 @@ data(mtcars) ##Load mtcars dataset
 
 From the fig. 1 in the appendix we know that the mtcars dataset contains `r nrow(mtcars)` observations and `r length(mtcars)` variables: `r names(mtcars)`. The fig. 2 boxplot shows the relationship between MPG and AM, from the boxplot we can see that the cars with manual transmission yield a better miles per gallon than the car with automatic transmission.
 
-
-However we need to test whether it is true that the cars with manual transmission yield better mpg than cars with automatic tranmission by performing a hyphothesis testing (T Test). The null hypothesis is the transmission does not impact the result of MPG and the alternative hyphothesis is the tranmission will impact the result of MPG. To reject null hypothesis, a scientific standard of more than 95% confidence interval is used because anything less is no significance difference for scientific studies. Hence the P value (critical value) must be less than 5% ( .05) for a significance difference. If the P value is less than .05, it is likely that the transmission has impact on the MPG. If the P value is more than .05, it is unlikely that the transmission has impact on MPG. 
+However we need to test whether it is true that the cars with manual transmission yield better mpg than cars with automatic tranmission by performing a hyphothesis testing (T Test). The null hypothesis is the transmission does not impact the outcome of MPG and the alternative hyphothesis is the tranmission will impact the outcome of MPG. To reject null hypothesis, a scientific standard of more than 95% confidence interval is used because anything less is no significance difference for scientific studies. Hence the P value (critical value) must be less than 5% ( .05) for a significance difference. If the P value is less than .05, it is likely that the transmission has impact on MPG. If the P value is more than .05, it is unlikely that the transmission has impact on MPG. 
 
 ```{r hypothesisTest}
 ##T test to show whether transmission has impact on MPG
 hTest <- t.test(mpg~am, data=mtcars, paired=F, var.equal=T, conf.level=0.95) 
 hTest$p.value ##Getting the p value of T test 
 ```
-The P value results of the hypothesis T test conducted shows the p value is `r hTest$p.value` which is less than .05. Therefore we reject the null hypothesis and we can conclude that tranmission type has an impact on the MPG. The T Test result of the mtcars dataset also shows that the mean for automatic is 17.15 MPG and the mean for manual is 24.39 MPG.
+The P value results of the hypothesis T test conducted shows the p value is `r hTest$p.value` which is less than .05. Therefore we reject the null hypothesis and we can conclude that tranmission type has an impact on the outcome of MPG. The T Test result of the mtcars dataset also shows that the mean for automatic is 17.15 MPG and the mean for manual is 24.39 MPG.
 
 <br />
 
 ### 3. Regression Models Analysis
 ***
-We need to examine further whether the AM variable is the biggest factor in determining the impact of MPG or perhaps there are other variables in the mtcars data that we should explore further.In the fig. 3 you can look at the correlation relationship between all variables.
+We need to examine further whether the AM variable is the biggest factor in determining the impact of MPG (outcome) or perhaps there are other variables in the mtcars data that we should explore further. In the fig. 3 you can look at the correlation relationship between all the variables.
 
-The first regression that we will look at is the relationship between AM and MPG and in this instance we are using linear regression.
+The first regression is the relationship between AM and MPG and in this instance we are using SIMPLE LINEAR REGRESSION (single variable).
 
 ```{r linearRegression}
 ##Fit linear regression model
 linReg <- lm(mpg ~ am, data = mtcars)
 ```
 
-Please refer to the fig. 4 in the appendix for the linear regression that shows the R Square and the Adjusted R Square of 0.36 and 0.34 respectively which is pretty low. AM might not be the the best variable to determine the MPG.
+Please refer to the fig. 4 in the appendix for the simple linear regression output that shows the Multiple R Square and the Adjusted R Square of 0.36 and 0.34 respectively which is pretty low. AM varible might not be the the only variable to determine the outcome of MPG.
 
-The second regression will be the multivariable regression where we will include all the variables in the mtcars.
+The second regression will be the MULTIVARIABLE REGRESSION where we will include all the 11 variables in the mtcars.
+
 ```{r multiRegression}
 ##Fit multiple regression model
 mulReg <- lm(mpg~., data = mtcars)
 ```
 
-Please refer to the fig. 5 in the appendix for the multiple regression that shows the R Square and the Adjust R Square of 0.87 and 0.81 respectively which is higher than the first linear regression. However the Variance Inflation Factor (VIF) is very high for a number of variables (more than 5) and the p Value is more than .05 for a number of variables.
+Please refer to the fig. 5 in the appendix for the multiple regression output that shows the R Square and the Adjust R Square of 0.87 and 0.81 respectively which is higher than the first simple linear regression. However the Variance Inflation Factor (VIF) is very high (more than 5) for a number of variables and the p Value is more than .05 for a number of variables.
 
-The third regression will be the stepwise regression in which the choice of predictive variables is carried out by an automatic procedure. Please look at the appendix for the stepwise regression method explanation.
+The third regression will be the STEPWISE REGRESSION in which the choice of predictive variables is carried out by an automatic procedure. Please look at the appendix for the stepwise regression method explanation.
+
 ```{r stepwiseRegression, results='hide', error=FALSE, warning=FALSE, message=FALSE}
 ##Fit Stepwise regression using bidirectional method
 stepReg <- step(lm(mpg~., data=mtcars), direction = "both")
 ```
 
-Please refer to Fig. 6 in the appendix for the stepwise regression that shows the three variables matters to MPG namely wtm, qsec and AM. The R Square and the Adjust R Square of 0.85 and 0.835 respectively which is better than the linear and multivariable regression. The Variance Inflation Factor (VIF) is very good as it is low (less than 5) and the p Value is significance which is less than .05.
+Please refer to Fig. 6 in the appendix for the stepwise regression output that shows the three variables matters to MPG outcome namely WT, QSEC and AM. The Multiple R Square and the Adjusted R Square of 0.85 and 0.835 respectively which is better than the simple linear and multivariable regression. The Variance Inflation Factor (VIF) is very good as it is low (less than 5) and the p Value is significance which is less than .05.
 
 <br />
 
 ### 4. Conclusion
 ***
-Judging 
+The simple linear regression model with one variable, AM is not strong enough to determine the MPG as its multiple R Square lower than the other two models. The second model, multivariable regression model with all the 11 variables included in the model is not ideal due to the high VIF and poor p value in some variables. Thus the stepwise regression model with three variables (wt, qsec and AM) produces a better R Square, higher F statistics, lower VIF and siginificance in p value than the other two models. Hence the stepwise regression model is superior than linear and multivariable regression models for determining MPG (outcome).  
+
+<br />
+
+#### Winner: Stepwise Regression Model
 
 <br />
 
 ### 5. Appendix
-
 ***
 Figure 1: Data Summary
 ```{r dataSummary}
@@ -128,8 +133,6 @@ cor(mtcars) ## Correlations between all variables
 
 Figure 4: Linear Regression Output
 ```{r linearRegressionPlot}
-par(mfrow = c(2,2)) ##Multiple grapths into two by two plot
-plot(linReg) ##Plot linear regression model
 summary(linReg) ##Output of regression model result
 anova(linReg) ##Output of Analysis of Variance
 ```
@@ -137,8 +140,6 @@ anova(linReg) ##Output of Analysis of Variance
 
 Figure 5: Multivariable Regression Output
 ```{r multiRegressionPlot}
-par(mfrow = c(2,2)) ##Multiple grapths into two by two plot
-plot(mulReg) ##Plot multivariable regression model
 summary(mulReg) ##Output of regression model result
 anova(mulReg) ##Output of Analysis of Variance
 vif(mulReg) ##Output of Variance Inflation Factor
@@ -163,3 +164,14 @@ Forward selection, which involves starting with no variables in the model, testi
 Backward elimination, which involves starting with all candidate variables, testing the deletion of each variable using a chosen model fit criterion, deleting the variable (if any) whose loss gives the most statistically insignificant deterioration of the model fit, and repeating this process until no further variables can be deleted without a statistically insignificant loss of fit.
 Bidirectional elimination, a combination of the above, testing at each step for variables to be included or excluded.
 Source: wikipedia
+
+<br />
+
+##### The platform specification used:
+Spec    | Description
+------- | -----------------------
+OS      | Windows 10 Pro - 64 bit
+CPU     | AMD Ryzen 5 - 3400G
+RAM     | 16GB DDR4 3000MHz
+Storage | 500GB SSD - M.2 NVMe (PCIe) 
+Tool    | RStudio
