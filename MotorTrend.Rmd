@@ -80,11 +80,14 @@ mulReg <- lm(mpg~., data = mtcars)
 
 Please refer to the fig. 5 in the appendix for the multiple regression that shows the R Square and the Adjust R Square of 0.87 and 0.81 respectively which is higher than the first linear regression. However the Variance Inflation Factor (VIF) is very high for a number of variables (more than 5) and the p Value is more than .05 for a number of variables.
 
-The third regression will be the stepwise regression in which the choice of predictive variables is carried out by an automatic procedure. Please look at the appendix for the stepwise regression method.
-```{r stepwiseRegression}
+The third regression will be the stepwise regression in which the choice of predictive variables is carried out by an automatic procedure. Please look at the appendix for the stepwise regression method explanation.
+```{r stepwiseRegression, results='hide', error=FALSE, warning=FALSE, message=FALSE}
 ##Fit Stepwise regression using bidirectional method
 stepReg <- step(lm(mpg~., data=mtcars), direction = "both")
 ```
+
+Please refer to Fig. 6 in the appendix for the stepwise regression that shows the three variables matters to MPG namely wtm, qsec and AM. The R Square and the Adjust R Square of 0.85 and 0.835 respectively which is better than the linear and multivariable regression. The Variance Inflation Factor (VIF) is very good as it is low (less than 5) and the p Value is significance which is less than .05.
+
 <br />
 
 ### 4. Conclusion
