@@ -3,9 +3,9 @@ title: "MotorTrend Data Analysis - EDA & Regression"
 author: "Willianto Asalim"
 date: "14/06/2020"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
 ---
 
 ```{r setoptions, echo=FALSE}
@@ -92,20 +92,22 @@ Please refer to Fig. 6 in the appendix for the stepwise regression that shows th
 
 ### 4. Conclusion
 ***
+Judging 
 
+<br />
 
 ### 5. Appendix
 
 ***
-Figure 1:
+Figure 1: Data Summary
 ```{r dataSummary}
-kable(summary(mtcars))
-dim(mtcars)
-names(mtcars)
+summary(mtcars) ##Summary of mtcars dataset
+dim(mtcars) ##Number of observations and variables in mtcars dataset
+names(mtcars) ##Names of the variables in mtcars dataset
 ```
 <br />
 
-Figure 2:
+Figure 2: Boxplot of MPG and AM relationship
 ```{r boxplot}
 ##Exploratory Data Analysis by looking at the relationship of MPG and AM using boxplot
 boxplot(mpg~am, data = mtcars,
@@ -114,38 +116,44 @@ boxplot(mpg~am, data = mtcars,
         ylab = "Miles per Gallon",
         main = "MPG by Transmission Type")
 ```
+<br />
 
-Figure 3: 
+Figure 3: Relationship between all variables
 ```{r variableRelationship}
+#Chart shows relationship between all variables
 pairs(mpg ~ ., data = mtcars, main="Relationships between all the variables")
-cor(mtcars)
+cor(mtcars) ## Correlations between all variables
 ```
+<br />
 
-Figure 4:
+Figure 4: Linear Regression Output
 ```{r linearRegressionPlot}
-par(mfrow = c(2,2))
-plot(linReg)
-summary(linReg)
-anova(linReg)
+par(mfrow = c(2,2)) ##Multiple grapths into two by two plot
+plot(linReg) ##Plot linear regression model
+summary(linReg) ##Output of regression model result
+anova(linReg) ##Output of Analysis of Variance
 ```
+<br />
 
-Figure 5:
+Figure 5: Multivariable Regression Output
 ```{r multiRegressionPlot}
-par(mfrow = c(2,2))
-plot(mulReg)
-summary(mulReg)
-anova(mulReg)
-vif(mulReg)
+par(mfrow = c(2,2)) ##Multiple grapths into two by two plot
+plot(mulReg) ##Plot multivariable regression model
+summary(mulReg) ##Output of regression model result
+anova(mulReg) ##Output of Analysis of Variance
+vif(mulReg) ##Output of Variance Inflation Factor
 ```
+<br />
 
-Figure 6:
+Figure 6: Stepwise Regression Output
 ```{r stepwiseRegressionPlot}
-par(mfrow = c(2,2))
-plot(stepReg)
-summary(stepReg)
-anova(stepReg)
-vif(stepReg)
+par(mfrow = c(2,2)) ##Multiple grapths into two by two plot
+plot(stepReg) ##Plot stepwise regression model
+summary(stepReg) ##Output of regression model result
+anova(stepReg) ##Output of Analysis of Variance
+vif(stepReg) ##Output of Variance Inflation Factor
 ```
+<br />
 
 Stepwise regression is a method of fitting regression models in which the choice of predictive variables is carried out by an automatic procedure.[1][2][3][4] In each step, a variable is considered for addition to or subtraction from the set of explanatory variables based on some prespecified criterion. Usually, this takes the form of a sequence of F-tests or t-tests, but other techniques are possible, such as adjusted R2, Akaike information criterion, Bayesian information criterion, Mallows's Cp, PRESS, or false discovery rate.
 
