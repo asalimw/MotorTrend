@@ -71,7 +71,7 @@ The first regression is the relationship between AM and MPG and in this instance
 linReg <- lm(mpg ~ am, data = mtcars)
 ```
 
-Please refer to the fig. 4 in the appendix for the simple linear regression output that shows the Multiple R Square and the Adjusted R Square of 0.36 and 0.34 respectively which is pretty low. AM varible might not be the the only variable to determine the outcome of MPG.
+Please refer to the fig. 4 in the appendix for the simple linear regression output that shows the Multiple R Square and the Adjusted R Square of 0.36 and 0.34 respectively which is pretty low. AM varible might not be the the best single variable to determine the outcome of MPG.
 
 The second regression will be the MULTIVARIABLE REGRESSION where we will include all the 11 variables in the mtcars.
 
