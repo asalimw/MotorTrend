@@ -85,7 +85,7 @@ Please refer to the fig. 5 in the appendix for the multiple regression output th
 The third regression will be the STEPWISE REGRESSION in which the choice of predictive variables is carried out by an automatic procedure. Please look at the appendix for the stepwise regression method explanation.
 
 ```{r stepwiseRegression, results='hide', error=FALSE, warning=FALSE, message=FALSE}
-##Fit Stepwise regression using bidirectional method - - Appendix fig 6
+##Fit Stepwise regression using bidirectional method - Appendix fig 6
 stepReg <- step(lm(mpg~., data=mtcars), direction = "both")
 ```
 
@@ -113,6 +113,8 @@ names(mtcars) ##Names of the variables in mtcars dataset
 ```
 <br />
 
+***
+
 Figure 2: Boxplot of MPG and AM relationship + T Test
 ```{r boxplot}
 ##Exploratory Data Analysis by looking at the relationship of MPG and AM using boxplot
@@ -125,6 +127,8 @@ hTest
 ```
 <br />
 
+***
+
 Figure 3: Relationship between all variables
 ```{r variableRelationship}
 #Chart shows relationship between all variables
@@ -133,12 +137,16 @@ cor(mtcars) ## Correlations between all variables
 ```
 <br />
 
+***
+
 Figure 4: Linear Regression Output
 ```{r linearRegressionPlot}
 summary(linReg) ##Output of regression model result
 anova(linReg) ##Output of Analysis of Variance
 ```
 <br />
+
+***
 
 Figure 5: Multivariable Regression Output
 ```{r multiRegressionPlot}
@@ -147,6 +155,8 @@ anova(mulReg) ##Output of Analysis of Variance
 vif(mulReg) ##Output of Variance Inflation Factor
 ```
 <br />
+
+***
 
 Figure 6: Stepwise Regression Output
 ```{r stepwiseRegressionPlot}
@@ -157,6 +167,8 @@ anova(stepReg) ##Output of Analysis of Variance
 vif(stepReg) ##Output of Variance Inflation Factor
 ```
 <br />
+
+***
 
 Stepwise regression is a method of fitting regression models in which the choice of predictive variables is carried out by an automatic procedure. In each step, a variable is considered for addition to or subtraction from the set of explanatory variables based on some prespecified criterion. Usually, this takes the form of a sequence of F-tests or t-tests, but other techniques are possible, such as adjusted R2, Akaike information criterion, Bayesian information criterion, Mallows's Cp, PRESS, or false discovery rate.
 
@@ -170,6 +182,8 @@ Bidirectional elimination, a combination of the above, testing at each step for 
 Source: wikipedia
 
 <br />
+
+***
 
 ##### The platform specification used:
 Spec    | Description
