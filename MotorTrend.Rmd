@@ -95,7 +95,7 @@ Please refer to Fig. 6 in the appendix for the stepwise regression output that s
 
 ### 4. Conclusion
 ***
-The simple linear regression model with one variable, AM is not strong enough to determine the MPG as its multiple R Square lower than the other two models. The second model, multivariable regression model with all the 11 variables included in the model is not ideal due to the high VIF and poor p value in some variables. Thus the stepwise regression model with three variables (wt, qsec and AM) produces a better R Square, higher F statistics, lower VIF and siginificance in p value than the other two models. Hence the stepwise regression model is superior than linear and multivariable regression models for determining MPG (outcome).  
+The simple linear regression model with one variable, AM is not strong enough to determine the MPG as its multiple R Square lower than the other two models. The second model, multivariable regression model with all the 11 variables included in the model is not ideal due to the high VIF and poor p value in some variables. Thus the stepwise regression model with three variables (WT, QSEC and AM) produces a better R Square, higher F statistics, lower VIF and siginificance in p value than the other two models. Hence the stepwise regression model is superior than linear and multivariable regression models for determining MPG (outcome).  
 
 <br />
 
