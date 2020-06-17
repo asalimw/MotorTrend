@@ -98,7 +98,7 @@ The simple linear regression model with one variable, AM is not strong enough to
 
 <br />
 
-#### Winner: Stepwise Regression Model
+#### Best model: Stepwise Regression Model
 
 <br />
 
